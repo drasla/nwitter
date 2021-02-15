@@ -18,7 +18,7 @@ const Auth = () => {
     return (
     <div>
     <form onSubmit={onSubmit}>
-        <input type="text" name="email" placeholder="Email" required value={email} onChange={onChange} />
+        <input type="email" name="email" placeholder="Email" required value={email} onChange={onChange} />
         <input type="password" name="password" placeholder="Password" required value={password} onChange={onChange} />
         <input type="submit" value="log In" />
     </form>
