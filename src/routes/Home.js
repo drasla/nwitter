@@ -1,10 +1,17 @@
 import React, {useState, useEffect} from "react";
+import {dbService} from "../fbase";
 
 const Home = () => {
     const [nweet, setNweet] = useState("");
-    const onSubmit = (event) => {
+    const onSubmit = async (event) => {
         event.preventDefault();
+        await dbService.collection("nweets").add({
+            nweet,
+            createdAt: Date.now(),
+        });
+        setNweet("");
     };
+
     const onChange = (event) => {
         const { target: {value}} = event;
         setNweet(value);
