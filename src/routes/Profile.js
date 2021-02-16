@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { authService } from "fbase";
-import { useHistory } from "react-router-dom";
+import React, {useState} from "react";
+import {authService} from "fbase";
+import {useHistory} from "react-router-dom";
 
-export default ({ refreshUser, userObj }) => {
+export default ({refreshUser, userObj}) => {
     const history = useHistory();
     const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
     const onLogOutClick = () => {
@@ -11,7 +11,7 @@ export default ({ refreshUser, userObj }) => {
     };
     const onChange = (event) => {
         const {
-            target: { value },
+            target: {value},
         } = event;
         setNewDisplayName(value);
     };
@@ -33,7 +33,7 @@ export default ({ refreshUser, userObj }) => {
                     placeholder="Display name"
                     value={newDisplayName}
                 />
-                <input type="submit" value="Update Profile" />
+                <input type="submit" value="Update Profile"/>
             </form>
             <button onClick={onLogOutClick}>Log Out</button>
         </>

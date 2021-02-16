@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import AppRouter from "components/Router";
-import { authService } from "fbase";
+import {authService} from "fbase";
 
 function App() {
     const [init, setInit] = useState(false);
@@ -13,6 +13,8 @@ function App() {
                     uid: user.uid,
                     updateProfile: (args) => user.updateProfile(args),
                 });
+            } else {
+                setUserObj(null);
             }
             setInit(true);
         });
