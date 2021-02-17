@@ -1,51 +1,71 @@
 import React, {useState} from "react";
-import {authService} from "../fbase";
+import {authService} from "fbase";
 
 const AuthForm = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
     const [newAccount, setNewAccount] = useState(true);
-
-    const toggleAccount = () => setNewAccount(prev => !prev);
-
-    const onChange = event => {
-        const {target: {name, value}} = event;
+    const [error, setError] = useState("");
+    const onChange = (event) => {
+        const {
+            target: {name, value},
+        } = event;
         if (name === "email") {
             setEmail(value);
         } else if (name === "password") {
             setPassword(value);
         }
     };
-    const onSubmit = async event => {
+    const onSubmit = async (event) => {
         event.preventDefault();
         try {
             let data;
             if (newAccount) {
-                // create account
-                data = await authService.createUserWithEmailAndPassword(email, password);
+                data = await authService.createUserWithEmailAndPassword(
+                    email,
+                    password
+                );
             } else {
-                // log in
-                data = await authService.signInWithEmailAndPassword((email, password));
+                data = await authService.signInWithEmailAndPassword(email, password);
             }
             console.log(data);
         } catch (error) {
             setError(error.message);
         }
     };
-
+    const toggleAccount = () => setNewAccount((prev) => !prev);
     return (
         <>
-            <form onSubmit={onSubmit}>
-                <input type="email" name="email" placeholder="Email" required value={email} onChange={onChange}/>
-                <input type="password" name="password" placeholder="Password" required value={password}
-                       onChange={onChange}/>
-                <input type="submit" value={newAccount ? "Create Account" : " Sign In"}/>
-                {error}
+            <form onSubmit={onSubmit} className="container">
+                <input
+                    name="email"
+                    type="email"
+                    placeholder="Email"
+                    required
+                    value={email}
+                    onChange={onChange}
+                    className="authInput"
+                />
+                <input
+                    name="password"
+                    type="password"
+                    placeholder="Password"
+                    required
+                    value={password}
+                    className="authInput"
+                    onChange={onChange}
+                />
+                <input
+                    type="submit"
+                    className="authInput authSubmit"
+                    value={newAccount ? "Create Account" : "Sign In"}
+                />
+                {error && <span className="authError">{error}</span>}
             </form>
-            <span onClick={toggleAccount}>{newAccount ? "Sign In" : "Create Account"}</span>
+            <span onClick={toggleAccount} className="authSwitch">
+        {newAccount ? "Sign In" : "Create Account"}
+      </span>
         </>
     );
-}
-
+};
 export default AuthForm;
